@@ -1,20 +1,14 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.202.3/containers/docker-from-docker
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.202.3/containers/docker-in-docker
 {
-	"name": "Docker from Docker",
-	"dockerFile": "Dockerfile",
-	"runArgs": ["--init"],
-	"mounts": [ "source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind" ],
+	"name": "Docker in Docker",
+	"dockerFile": "../focal/Dockerfile",
+	"runArgs": ["--init", "--privileged"],
+	"mounts": ["source=dind-var-lib-docker,target=/var/lib/docker,type=volume"],
 	"overrideCommand": false,
 	
-	// Use this environment variable if you need to bind mount your local source code into a new container.
-	"remoteEnv": {
-		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
-	},
-
 	// Set *default* container specific settings.json values on container create.
 	"settings": {},
-
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
 		"ms-azuretools.vscode-docker"
@@ -36,11 +30,9 @@
 	"features": {
 		"docker-in-docker": "20.10",
 		"docker-from-docker": "20.10",
-		"git": "os-provided",
+		"git": "latest",
 		"git-lfs": "latest",
-		"azure-cli": "latest",
-		"sshd": "latest",
-		"homebrew": "latest",
-		"python": "3.9"
+		"github-cli": "latest",
+		"homebrew": "latest"
 	}
 }

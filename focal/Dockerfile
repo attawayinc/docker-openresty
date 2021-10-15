@@ -1,8 +1,10 @@
 # Dockerfile - Ubuntu Focal
 # https://github.com/openresty/docker-openresty
 
-ARG RESTY_IMAGE_BASE="ubuntu"
-ARG RESTY_IMAGE_TAG="focal"
+# ARG RESTY_IMAGE_BASE="ubuntu"
+# ARG RESTY_IMAGE_TAG="focal"
+ARG RESTY_IMAGE_BASE="ssmbtech/ubuntu2004"
+ARG RESTY_IMAGE_TAG="210407"
 
 FROM ${RESTY_IMAGE_BASE}:${RESTY_IMAGE_TAG}
 

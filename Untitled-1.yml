@@ -1,0 +1,19 @@
+docker tag 74db976680a6 nerd.jfrog.io/default-docker-virtual/cis:ubuntu2018.04lts
+ssmbtech/cis:18.04lts 74db976680a6
+ssmbtech/cis                                                         18.04lts                af2d27465cdd 
+ssmbtech/ubuntu2004                                                  210407                  74db976680a6   9 months ago    202MB
+ssmbtech/ubuntu2004                                                  ubuntu2004-2021-01-12   74db976680a6   9 months ago    202MB
+
+docker push nerd.jfrog.io/default-docker-virtual/cis:ubuntu2018.04lts
+docker pull nerd.jfrog.io/default-docker-virtual/cis:ubuntu2018.04lts
+
+
+ docker commit -a "mcaj-admin" 41fb5a976092 insecurit/myopenresty-sec:ubuntu18.04-lts
+ 
+ myopenresty-sec                                                      latest                  bcb279351b1b   22 hours ago         654MB
+ docker commit -a "mcaj-admin" bcb279351b1b insecurit/myopenresty-sec:focal
+
+insecurit/myopenresty-sec                                            ubuntu18.04-lts         645e0bee8643   6 minutes ago   1.07GB
+docker tag 645e0bee8643 nerd.jfrog.io/default-docker-virtual/openresty:1.19-cis-bionic
+docker push nerd.jfrog.io/default-docker-virtual/openresty:1.19-cis-bionic
+docker pull nerd.jfrog.io/default-docker-virtual/openresty:1.19-cis-bionic

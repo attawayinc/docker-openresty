@@ -1,6 +1,11 @@
 `docker-openresty` Changelog
 ============================
 
+## 1.27.1.2-11 (2026-02-09)
+
+ * `latest` tag matches latest tagged `bookworm` release (#294)
+ * Rebuilt for upstream OpenSSL patch updates
+
 ## 1.27.1.2-10 (2026-02-05)
 
  * Upgrade `alpine` built-from source flavor to Alpine 3.22.3 (#291)

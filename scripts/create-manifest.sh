@@ -23,6 +23,10 @@ if [[ -z "$REGISTRY_IMAGE" ]]; then
   exit 1
 fi
 
+# Define latest version series to tag as latest
+# Can be overridden by env var
+RESTY_LATEST_SERIES="${RESTY_LATEST_SERIES:-1.27}"
+
 # Define architectures for each flavor
 # Default to amd64 and arm64, can be overridden by RESTY_ARCHS env var
 ARCHS="${RESTY_ARCHS:-amd64 arm64}"
@@ -93,18 +97,21 @@ for TAG_PREFIX in "${PREFIXES[@]}"; do
        fi
     fi
     
-    # 3. Handle specific "latest" tag logic for bookworm on master
-    if [[ "$FLAVOR" == "bookworm" && "$GITHUB_REF" == "refs/heads/master" && "$TAG_PREFIX" == "" ]]; then
-       echo "Tagging bookworm as latest"
-       if [[ "$DRY_RUN" != "true" ]]; then
-           docker buildx imagetools create -t "${REGISTRY_IMAGE}:latest" "${REGISTRY_IMAGE}:bookworm"
-           if [[ "$ENABLE_MIRROR" == "true" ]]; then
-              docker buildx imagetools create -t "${MIRROR_IMAGE}:latest" "${MIRROR_IMAGE}:bookworm"
-           fi
-       else 
-           echo "DRY RUN: docker buildx imagetools create -t \"${REGISTRY_IMAGE}:latest\" \"${REGISTRY_IMAGE}:bookworm\""
-           if [[ "$ENABLE_MIRROR" == "true" ]]; then
-              echo "DRY RUN: docker buildx imagetools create -t \"${MIRROR_IMAGE}:latest\" \"${MIRROR_IMAGE}:bookworm\""
+    # 3. Handle specific "latest" tag logic for bookworm
+    # Point latest to the tagged release of the current primary version series
+    if [[ "$FLAVOR" == "bookworm" && "$GITHUB_REF_TYPE" == "tag" ]]; then
+       if [[ "$GITHUB_REF_NAME" == "${RESTY_LATEST_SERIES}."* && "$TAG_PREFIX" == "${GITHUB_REF_NAME}-" ]]; then
+           echo "Tagging $GITHUB_REF_NAME bookworm as latest"
+           if [[ "$DRY_RUN" != "true" ]]; then
+               docker buildx imagetools create -t "${REGISTRY_IMAGE}:latest" $SOURCES
+               if [[ "$ENABLE_MIRROR" == "true" ]]; then
+                  docker buildx imagetools create -t "${MIRROR_IMAGE}:latest" $MIRROR_SOURCES
+               fi
+           else 
+               echo "DRY RUN: docker buildx imagetools create -t \"${REGISTRY_IMAGE}:latest\" $SOURCES"
+               if [[ "$ENABLE_MIRROR" == "true" ]]; then
+                  echo "DRY RUN: docker buildx imagetools create -t \"${MIRROR_IMAGE}:latest\" $MIRROR_SOURCES"
+               fi
            fi
        fi
     fi

@@ -24,7 +24,10 @@ if [[ -z "$REGISTRY_IMAGE" ]]; then
 fi
 
 # Define latest version series to tag as latest
-# Can be overridden by env var
+# Can be overridden by env var or file (LATEST_SERIES in current dir)
+if [[ -f "LATEST_SERIES" ]]; then
+    RESTY_LATEST_SERIES=$(cat LATEST_SERIES | head -n 1 | tr -d '[:space:]')
+fi
 RESTY_LATEST_SERIES="${RESTY_LATEST_SERIES:-1.27}"
 
 # Define architectures for each flavor
@@ -73,9 +76,11 @@ for TAG_PREFIX in "${PREFIXES[@]}"; do
     
     # Collect source images for all architectures
     for ARCH in $ARCHS; do
-        SOURCES="$SOURCES ${REGISTRY_IMAGE}:${TAG_PREFIX}${FLAVOR}-${ARCH}"
+        SRC_IMG="${REGISTRY_IMAGE}:${TAG_PREFIX}${FLAVOR}-${ARCH}"
+        SOURCES="$SOURCES ${SRC_IMG}"
         if [[ "$ENABLE_MIRROR" == "true" ]]; then
-            MIRROR_SOURCES="$MIRROR_SOURCES ${MIRROR_IMAGE}:${TAG_PREFIX}${FLAVOR}-${ARCH}"
+            # Use GHCR (SRC_IMG) as source for mirror manifest to ensure multi-arch consistency
+            MIRROR_SOURCES="$MIRROR_SOURCES ${SRC_IMG}"
         fi
     done
   

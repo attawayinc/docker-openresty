@@ -38,6 +38,8 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.GHCR_IMAGE }}
+          flavor: |
+            latest=false
           tags: |
             type=raw,value=${{ matrix.flavor }}-${{ matrix.arch }}
 

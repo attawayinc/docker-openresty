@@ -289,6 +289,8 @@ jobs:
         with:
           images: |
             ${{ env.GHCR_IMAGE }}
+          flavor: |
+            latest=false
           tags: |
             type=raw,value=${{ matrix.flavor }}-${{ matrix.arch }},enable=${{ github.ref == 'refs/heads/master' }}
             type=ref,event=tag,suffix=-${{ matrix.flavor }}-${{ matrix.arch }}
@@ -428,6 +430,8 @@ jobs:
         with:
           images: |
             ${{ env.GHCR_IMAGE }}
+          flavor: |
+            latest=false
           tags: |
             type=raw,value=${{ matrix.flavor }}-${{ matrix.arch }},enable=${{ github.ref == 'refs/heads/master' }}
             type=ref,event=tag,suffix=-${{ matrix.flavor }}-${{ matrix.arch }}

@@ -28,6 +28,7 @@ Dockerfiles are provided for the following base systems, selecting the Dockerfil
  * [Ubuntu Jammy](https://github.com/openresty/docker-openresty/blob/master/jammy/Dockerfile) (`jammy/Dockerfile`)
  * [Ubuntu Noble](https://github.com/openresty/docker-openresty/blob/master/noble/Dockerfile) (`noble/Dockerfile`)
  * [Ubuntu Resolute](https://github.com/openresty/docker-openresty/blob/master/resolute/Dockerfile) (`resolute/Dockerfile`)
+ * [RestyRepo](https://github.com/openresty/docker-openresty/blob/master/restyrepo/Dockerfile) (`restyrepo/Dockerfile`)
 
 We used to support more build flavors but have trimmed that down.  Older Dockerfiles are archived in the [`archive`](https://github.com/openresty/docker-openresty/tree/master/archive) folder.
 
@@ -38,11 +39,22 @@ The following are the available build-time options. They can be set using the `-
 docker build --build-arg RESTY_J=4 -f jammy/Dockerfile .
 ```
 
+The `restyrepo` flavor is different from the other source builds: it clones `RESTY_SOURCE_REPO`, checks out `RESTY_VERSION` as a branch or tag, runs the OpenResty source repository's `make` target to generate an OpenResty source tarball, and then builds from that tarball.  Use it when you need to test an OpenResty source branch or fork before it is published as a release tarball or upstream package:
+
+```
+docker build -t myopenresty-restyrepo -f restyrepo/Dockerfile .
+docker build -t myopenresty-restyrepo \
+  --build-arg RESTY_VERSION=v1.31.1.1 \
+  --build-arg RESTY_SOURCE_REPO=https://github.com/openresty/openresty.git \
+  -f restyrepo/Dockerfile .
+```
+
 | Key                                     | Default | Description |
 |:-----------------------------------------| :-----: |:----------- |
-| RESTY_IMAGE_BASE                        | "ubuntu" / "alpine" | The Debian or Alpine Docker image base to build `FROM`. |
-| RESTY_IMAGE_TAG                         | "noble" / "3.22.3" | The Debian or Alpine Docker image tag to build `FROM`. |
-| RESTY_VERSION                           | 1.27.1.2 | The version of OpenResty to use. |
+| RESTY_IMAGE_BASE                        | "ubuntu" / "alpine" / "debian" for `restyrepo` | The Ubuntu, Alpine, or Debian Docker image base to build `FROM`. |
+| RESTY_IMAGE_TAG                         | "noble" / "3.22.3" / "trixie-slim" for `restyrepo` | The Ubuntu, Alpine, or Debian Docker image tag to build `FROM`. |
+| RESTY_VERSION                           | 1.27.1.2 / v1.31.1.1 for `restyrepo` | The version of OpenResty to use. For `restyrepo`, this is the branch or tag checked out from `RESTY_SOURCE_REPO` and should include the full ref name, such as `v1.31.1.1`. |
+| RESTY_SOURCE_REPO                       | "https://github.com/openresty/openresty.git" | The OpenResty source repository to clone. Used by `restyrepo`. |
 | RESTY_LUAROCKS_VERSION                  | 3.13.0 | The version of LuaRocks to use. |
 | RESTY_OPENSSL_VERSION                   | 3.5.7 | The version of OpenSSL to use. |
 | RESTY_OPENSSL_PATCH_VERSION             | 3.5.5 | The version of OpenSSL to use when patching. |
@@ -238,4 +250,3 @@ End-To-End Tests
 ================
 
 The script [`./tests/e2e/run-test.sh`](./tests/e2e/run-test.sh) will stand up two local container registries and attempt to build all the images.
-

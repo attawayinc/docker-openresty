@@ -47,6 +47,7 @@ It is best practice to pin your images to an explicit image tag.  The [next sect
 | `openresty/openresty:1.29.2.4-1-bookworm-fat` | Built-from-upstream Debian Bookworm |
 | `openresty/openresty:1.29.2.4-1-alpine` | Built-from-source Alpine |
 | `openresty/openresty:1.29.2.4-1-alpine-apk` | Built-from-upstream Alpine |
+| `openresty/openresty:1.31.1.1-1-restyrepo` | Built-from-source OpenResty GitHub branch on Debian Trixie |
 | `openresty/openresty:1.31-alpine` | Latest Alpine image in the OpenResty 1.31 release series |
 
 These are examples of untagged image names, for reference:
@@ -57,6 +58,7 @@ These are examples of untagged image names, for reference:
 | `openresty/openresty:noble` | Latest Ubuntu Noble |
 | `openresty/openresty:jammy` | Latest Ubuntu Jammy |
 | `openresty/openresty:alpine` | Latest Alpine |
+| `openresty/openresty:restyrepo` | Latest OpenResty GitHub source branch build |
 
 There are also specific tags for [Debug](https://openresty.org/en/deb-packages.html#openresty-debug) and [Valgrind](https://openresty.org/en/deb-packages.html#openresty-valgrind) OpenResty variants:
 | Image | Description |
@@ -117,6 +119,7 @@ The following "flavors" are built from source and are intended for more advanced
 - [`alpine-slim`, (*alpine/Dockerfile*](https://github.com/openresty/docker-openresty/blob/master/alpine/Dockerfile), stripped Alpine image)
 - [`jammy`, (*jammy/Dockerfile*)](https://github.com/openresty/docker-openresty/blob/master/jammy/Dockerfile)
 - [`noble`, (*noble/Dockerfile*)](https://github.com/openresty/docker-openresty/blob/master/noble/Dockerfile)
+- [`restyrepo`, (*restyrepo/Dockerfile*)](https://github.com/openresty/docker-openresty/blob/master/restyrepo/Dockerfile)
 
 The `openresty/openresty:latest` tag points to the latest `bookworm` image.
 
@@ -129,6 +132,8 @@ There are architecture-specific tags as well, `<openresty-version>-<image-versio
 OpenResty supports SSE 4.2 optimizations.  Starting with the `1.19.3.1` series, the architecture is auto-detected and the optimizations enabled accordingly.  Earlier image series `1.15.8.1` and `1.17.8.2` have `-nosse42` image flavors for systems which explicitly disable SSE 4.2 support; this is useful for older systems and embedded systems.  They are built with `-mno-sse4.2` appended to the build arg `RESTY_LUAJIT_OPTIONS`.  It is highly recommended *NOT* to use these if your system supports SSE 4.2 because the `CRC32` instruction dramatically improves large string performance.  These are only for built-from-source flavors, e.g. `1.15.8.1-3-bionic-nosse42`, `1.15.8.1-3-alpine-nosse42`, `1.15.8.1-3-alpine-fat-nosse42`.
 
 It is *highly recommended* that you use the upstream-based images for best support.  For best stability, pin your images to the full tag, for example `1.21.4.1-0-bionic`.
+
+The `restyrepo` flavor is a built-from-source image that clones the OpenResty GitHub repository, builds the OpenResty source tarball from the selected branch or tag, and then builds OpenResty from that generated tarball.  It uses Debian Trixie as its base image and is published for `amd64` and `arm64`.
 
 `-fat` images are ones that have [LuaRocks and OPM](#opm) installed in them. `-buildpack` images are based on [`buildpack-deps` images](https://hub.docker.com/_/buildpack-deps#what-is-buildpack-deps); they might be useful when more build scaffolding is required in your application.
 

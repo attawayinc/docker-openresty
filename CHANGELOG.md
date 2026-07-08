@@ -1,6 +1,11 @@
 `docker-openresty` Changelog
 ============================
 
+## 1.31.1.1-2 (2026-07-08)
+
+ * Upgrade OpenSSL to 3.5.7 (#307)
+ * Fix CHANGELOG dates (#306)
+
 ## 1.31.1.1-1 (2026-06-10)
 
  * ci: Release images with simple `1.31-<platform>` label (#304)

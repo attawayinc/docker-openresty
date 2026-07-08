@@ -1,7 +1,7 @@
 `docker-openresty` Changelog
 ============================
 
-## 1.31.1.1-1 (2024-06-10)
+## 1.31.1.1-1 (2026-06-10)
 
  * ci: Release images with simple `1.31-<platform>` label (#304)
  * ci: Fix missing s390x builds in manifest (`alma` and `resolute`)
@@ -9,23 +9,23 @@
  * alma: fixup run-deps and build-deps
  * alma: properly handle `RESTY_ADD_PACKAGE_RUNDEPS` and `RESTY_ADD_PACKAGE_BUILDDEPS`
 
-## 1.31.1.1-0 (2024-06-05)
+## 1.31.1.1-0 (2026-06-05)
 
  * Upgrade OpenResty to `1.31.1.1` (#303)
 
-## 1.29.2.5-1 (2024-05-26)
+## 1.29.2.5-1 (2026-05-26)
 
 **All unarchived flavors are are included in this release.** Thanks to the OpenResty maintainers.
 
  * Restore publishing of build-from-upstream flavors for `1.29.2.5`.
 
-## 1.29.2.5-0 (2024-05-24)
+## 1.29.2.5-0 (2026-05-24)
 
 **Only `build-from-source` flavors are included in this release.**  Thanks to the OpenResty maintainers for their prompt release.
 
  * Upgrade OpenResty to `1.29.2.5` (#302)
 
-## 1.29.2.4-1 (2024-05-21)
+## 1.29.2.4-1 (2026-05-21)
 
 **All unarchived flavors are are included in this release.** Thanks to the OpenResty maintainers.
 

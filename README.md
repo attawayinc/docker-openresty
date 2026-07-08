@@ -2,7 +2,7 @@
 
 [![Build Status](https://github.com/openresty/docker-openresty/actions/workflows/docker-publish.yml/badge.svg?branch=master)](https://github.com/openresty/docker-openresty/actions/workflows/docker-publish.yml)  [![](https://images.microbadger.com/badges/image/openresty/openresty.svg)](https://microbadger.com/#/images/openresty/openresty "microbadger.com")
 
-`docker-openresty` is [Docker](https://www.docker.com) tooling for OpenResty (https://www.openresty.org).
+`docker-openresty` is [Docker](https://www.docker.com) tooling for [OpenResty](https://www.openresty.org).
 
 Docker is a container management platform. OpenResty is a full-fledged web application server by
 bundling the standard nginx core, lots of 3rd-party nginx modules, as well as most of their external dependencies.

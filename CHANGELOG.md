@@ -4,6 +4,7 @@
 ## 1.31.1.1-2 (2026-07-08)
 
  * Upgrade OpenSSL to 3.5.7 (#307)
+ * Upgrade `alpine` built-from-source flavor to Alpine 3.23.5
  * Fix CHANGELOG dates (#306)
 
 ## 1.31.1.1-1 (2026-06-10)
